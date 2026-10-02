@@ -13,6 +13,8 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+from datetime import timedelta
+
 
 load_dotenv()
 
@@ -30,6 +32,14 @@ SECRET_KEY = 'django-insecure-br9f&lcy7&a=7p!5nx199qn@+0#q43*y=if!bzm_vz#5haj+75
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 
 
 # Application definition
@@ -146,4 +156,14 @@ MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
